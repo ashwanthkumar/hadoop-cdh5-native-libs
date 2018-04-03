@@ -16,18 +16,19 @@ RUN apt-get update && \
 ## Install the specific version of protobuf
 RUN wget https://github.com/google/protobuf/releases/download/v2.5.0/protobuf-2.5.0.tar.gz && \
   tar xzf protobuf-2.5.0.tar.gz && \
+  rm -rf protobuf-2.5.0.tar.gz && \
   cd protobuf-2.5.0 && \
   ./configure && \
   make && \
   make install && \
   ldconfig
 
-
-## Download and compile CDH from source
-RUN wget --continue http://archive.cloudera.com//cdh5/cdh/5/${CDH5_VERSION}-src.tar.gz && \
+## Download and compile hadoop native libraries from source
+RUN wget --continue http://archive.cloudera.com/cdh5/cdh/5/${CDH5_VERSION}-src.tar.gz && \
   tar xzf ${CDH5_VERSION}-src.tar.gz && \
   cd ${CDH5_VERSION} && \
   mvn package -Pdist,native -DskipTests -Dtar && \
   cd hadoop-dist/target && \
   tar -czf hadoop-native-${CDH5_VERSION}.tar.gz ${CDH5_VERSION}/lib && \
-  cp hadoop-native-${CDH5_VERSION}.tar.gz ${APP_DIR}/
+  cp hadoop-native-${CDH5_VERSION}.tar.gz ${APP_DIR}/ && \
+  rm -rf ${APP_DIR}/${CDH5_VERSION} ${APP_DIR}/${CDH5_VERSION}-src.tar.gz
