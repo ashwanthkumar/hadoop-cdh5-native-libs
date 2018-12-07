@@ -2,7 +2,7 @@ FROM ubuntu:14.04.3
 
 MAINTAINER Ashwanth Kumar <ashwanthkumar@googlemail.com>
 
-ENV CDH5_VERSION=hadoop-2.6.0-cdh5.15.1
+ENV CDH5_VERSION=hadoop-2.6.0-cdh5.16.1
 ENV APP_DIR=/app
 WORKDIR $APP_DIR
 
